@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Website</title>
+  </head>
+  <body>
+    <h1>My Website</h1>
+    <p>Welcome to my website!</p>
+
+    <!-- Add the HTML proxy form -->
+    <form id="proxy-form">
+      <label for="url">Enter a URL:</label><br>
+      <input type="text" id="url" name="url"><br>
+      <input type="submit" value="Go">
+    </form> 
+
+    <!-- Add a container for the proxy content -->
+    <div id="proxy-container"></div>
+
+    <!-- Add the JavaScript code -->
+    <script>
+      document.getElementById('proxy-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState == XMLHttpRequest.DONE) {
+            document.getElementById('proxy-container').innerHTML = xhr.responseText;
+          }
+        }
+
+        xhr.open('GET', '/proxy.php?url=' + document.getElementById('url').value, true);
+        xhr.send();
+      });
+    </script>
+  </body>
+</html>
