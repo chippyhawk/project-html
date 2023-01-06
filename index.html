@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+  <head>
+    <title>HTML Proxy</title>
+  </head>
+  <body>
+    <div id="content"></div>
+    <script>
+      // Retrieve the target URL from the query string
+      var targetUrl = new URL(location).searchParams.get('url');
+      if (!targetUrl) {
+        document.getElementById('content').innerHTML = 'Missing target URL';
+        return;
+      }
+
+      // Send a request to the target server
+      fetch(targetUrl)
+        .then(response => response.text())
+        .then(html => {
+          // Replace all occurrences of the target URL with the proxy URL in the response HTML
+          var proxyUrl = location.origin;
+          html = html.replace(targetUrl, proxyUrl);
+
+          // Display the modified HTML in the page
+          document.getElementById('content').innerHTML = html;
+        });
+    </script>
+  </body>
+</html>
