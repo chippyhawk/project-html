@@ -1,0 +1,32 @@
+<!-- Add an iframe to your website's HTML -->
+<iframe src="/path/to/proxy.html"></iframe>
+
+<!-- Modify the JavaScript code in proxy.html to customize the proxy -->
+<script>
+  // Retrieve the target URL from the query string
+  var targetUrl = new URL(location).searchParams.get('url');
+  if (!targetUrl) {
+    document.getElementById('content').innerHTML = 'Missing target URL';
+    return;
+  }
+
+  // Send a request to the target server
+  fetch(targetUrl)
+    .then(response => response.text())
+    .then(html => {
+      // Replace all occurrences of the target URL with the proxy URL in the response HTML
+      var proxyUrl = location.origin;
+      html = html.replace(targetUrl, proxyUrl);
+
+      // Modify the HTML before displaying it
+      // (e.g., remove unwanted elements, add custom styles, etc.)
+      html = html.replace('</head>', '<style>body { background-color: pink; }</style></head>');
+
+      // Display the modified HTML in the page
+      document.getElementById('content').innerHTML = html;
+    })
+    .catch(error => {
+      // Handle errors
+      document.getElementById('content').innerHTML = 'An error occurred: ' + error;
+    });
+</script>
