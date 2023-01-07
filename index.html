@@ -1,37 +1,16 @@
+<!DOCTYPE html>
 <html>
-  <head>
-    <title>URL Proxy</title>
-    <script>
-      function updateIframe(url) {
-        document.getElementById('proxy').src = url;
-      }
-
-      function proxy(form) {
-        var url = form.url.value;
-
-        // Fetch the content of the requested URL
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-          if (xhr.readyState == 4 && xhr.status == 200) {
-            document.getElementById('proxy').srcdoc = xhr.responseText;
-          }
-        };
-        xhr.open('POST', 'proxy.php', true);
-        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        xhr.send('url=' + encodeURIComponent(url));
-
-        return false;
-      }
-    </script>
-  </head>
-  <body>
-    <h1>URL Proxy</h1>
-    <form method="post" onSubmit="return proxy(this);">
-      <label for="url">Enter URL:</label><br>
-      <input type="text" id="url" name="url"><br>
-      <input type="submit" value="Submit">
-    </form> 
-    <br>
-    <iframe src="" id="proxy" frameborder="0"></iframe>
-  </body>
+<head>
+	<title>Proxy Viewer</title>
+</head>
+<body>
+	<h1>Proxy Viewer</h1>
+	<form action="">
+		<label for="url">Enter URL:</label><br>
+		<input type="text" id="url" name="url"><br>
+		<input type="submit" value="Submit">
+	</form> 
+	<br>
+	<iframe src="proxy.php?url=[proxied URL goes here]" style="width:100%; height:500px;"></iframe>
+</body>
 </html>
