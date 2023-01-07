@@ -1,23 +1,32 @@
 <html>
   <head>
     <title>URL Proxy</title>
-  </head>
-  <html>
-  <head>
-    <title>URL Proxy</title>
     <script>
       function updateIframe(url) {
         document.getElementById('proxy').src = url;
       }
+
+      function proxy(form) {
+        var url = form.url.value;
+
+        // Fetch the content of the requested URL
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            document.getElementById('proxy').srcdoc = xhr.responseText;
+          }
+        };
+        xhr.open('POST', 'proxy.php', true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.send('url=' + encodeURIComponent(url));
+
+        return false;
+      }
     </script>
   </head>
   <body>
-    <!-- Page content -->
-  </body>
-</html>
-  <body>
     <h1>URL Proxy</h1>
-    <form method="post" action="proxy.php">
+    <form method="post" onSubmit="return proxy(this);">
       <label for="url">Enter URL:</label><br>
       <input type="text" id="url" name="url"><br>
       <input type="submit" value="Submit">
