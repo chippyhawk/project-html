@@ -1,29 +1,28 @@
-<!doctype html>
 <html>
   <head>
-    <title>HTML Proxy</title>
+    <title>URL Proxy</title>
+  </head>
+  <html>
+  <head>
+    <title>URL Proxy</title>
+    <script>
+      function updateIframe(url) {
+        document.getElementById('proxy').src = url;
+      }
+    </script>
   </head>
   <body>
-    <div id="content"></div>
-    <script>
-      // Retrieve the target URL from the query string
-      var targetUrl = new URL(location).searchParams.get('url');
-      if (!targetUrl) {
-        document.getElementById('content').innerHTML = 'Missing target URL';
-        return;
-      }
-
-      // Send a request to the target server
-      fetch(targetUrl)
-        .then(response => response.text())
-        .then(html => {
-          // Replace all occurrences of the target URL with the proxy URL in the response HTML
-          var proxyUrl = location.origin;
-          html = html.replace(targetUrl, proxyUrl);
-
-          // Display the modified HTML in the page
-          document.getElementById('content').innerHTML = html;
-        });
-    </script>
+    <!-- Page content -->
+  </body>
+</html>
+  <body>
+    <h1>URL Proxy</h1>
+    <form method="post" action="proxy.php">
+      <label for="url">Enter URL:</label><br>
+      <input type="text" id="url" name="url"><br>
+      <input type="submit" value="Submit">
+    </form> 
+    <br>
+    <iframe src="" id="proxy" frameborder="0"></iframe>
   </body>
 </html>
